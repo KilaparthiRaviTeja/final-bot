@@ -287,7 +287,7 @@ if st.session_state.step == 1:
         if all(v == "" for v in details.values()):
             st.warning("We couldn't extract any details. Please fill them in manually.")
 
- if st.button("Reset and Re-upload"):
+        if st.button("Reset and Re-upload"):
             st.session_state.pop("id_verified", None)
             st.session_state.pop("user_details", None)
             st.rerun()
