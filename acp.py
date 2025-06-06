@@ -267,7 +267,7 @@ st.title("ACP/Lifeline Application")
 # -------- Step 1 --------
 if st.session_state.step == 1:
     st.header("Step 1: Upload Your ID")
-    uploaded_file = st.file_uploader("Upload your government-issued ID", type=["png", "jpg", "jpeg"])
+    uploaded_file = st.file_uploader("Upload your government-issued ID", type=["png", "jpg", "jpeg","jfif"])
 
     if uploaded_file:
         st.image(Image.open(uploaded_file), caption="Uploaded ID", use_column_width=True)
