@@ -264,14 +264,23 @@ def prev_step():
 
 st.title("ACP/Lifeline Application")
 
-# -------- Step 1 --------
+from PIL import Image, UnidentifiedImageError
+
 if st.session_state.step == 1:
     st.header("Step 1: Upload Your ID")
-    uploaded_file = st.file_uploader("Upload your government-issued ID", type=["png", "jpg", "jpeg","jfif"])
+    uploaded_file = st.file_uploader("Upload your government-issued ID", type=["png", "jpg", "jpeg", "jfif"])
 
     if uploaded_file:
-        st.image(Image.open(uploaded_file), caption="Uploaded ID", use_column_width=True)
-        st.session_state.gov_id_file = uploaded_file
+        try:
+            img = Image.open(uploaded_file).convert("RGB")
+            st.image(img, caption="Uploaded ID", use_column_width=True)
+            st.session_state.gov_id_file = uploaded_file
+        except UnidentifiedImageError:
+            st.error("⚠️ Unable to open this image file. Please try a different one (JPG, PNG, JFIF).")
+            st.stop()
+        except Exception as e:
+            st.error(f"⚠️ An unexpected error occurred: {e}")
+            st.stop()
 
         if st.button("Extract Details via OCR"):
             verify_ocr_and_extract_details(uploaded_file)
@@ -279,8 +288,8 @@ if st.session_state.step == 1:
     # ✅ Show extracted details
     if st.session_state.get("id_verified"):
         st.success("OCR complete. Please review and edit your details if needed:")
-
         details = st.session_state.user_details
+
         st.session_state.user_details["name"] = st.text_input("Name", value=details.get("name", ""))
         st.session_state.user_details["address"] = st.text_area("Address", value=details.get("address", ""))
         st.session_state.user_details["dob"] = st.text_input("Date of Birth", value=details.get("dob", ""))
@@ -299,6 +308,7 @@ if st.session_state.step == 1:
         st.button("Back", disabled=True)
     with col2:
         st.button("Next", disabled=not st.session_state.get("id_verified", False), on_click=next_step)
+
 
 
 
