@@ -287,10 +287,16 @@ if st.session_state.step == 1:
         if all(v == "" for v in details.values()):
             st.warning("We couldn't extract any details. Please fill them in manually.")
 
-        if st.button("Reset and Re-upload"):
-            st.session_state.pop("id_verified", None)
-            st.session_state.pop("user_details", None)
-            st.experimental_rerun()
+# Trigger reset via a session flag
+if st.button("Reset and Re-upload"):
+    st.session_state.reset_triggered = True
+
+# Perform reset outside the button block
+if st.session_state.get("reset_triggered"):
+    st.session_state.pop("id_verified", None)
+    st.session_state.pop("user_details", None)
+    st.session_state.pop("reset_triggered", None)
+    st.experimental_rerun()
 
     # Navigation buttons
     col1, col2 = st.columns(2)
