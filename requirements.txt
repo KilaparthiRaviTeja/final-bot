@@ -2,4 +2,9 @@ streamlit
 easyocr
 Pillow
 numpy
-opencv-python-headless
+python-dateutil
+geopy
+pandas
+plotly
+geopandas
+shapely
