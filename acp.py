@@ -287,16 +287,10 @@ if st.session_state.step == 1:
         if all(v == "" for v in details.values()):
             st.warning("We couldn't extract any details. Please fill them in manually.")
 
-# Step 1: Set a flag on button click
-if st.button("Reset and Re-upload"):
-    st.session_state.reset_triggered = True
-
-# Step 2: At the very top or bottom of your script (outside of other blocks), handle the rerun
-if st.session_state.get("reset_triggered", False):
-    st.session_state.pop("reset_triggered")
-    st.session_state.pop("id_verified", None)
-    st.session_state.pop("user_details", None)
-    st.experimental_rerun()
+ if st.button("Reset and Re-upload"):
+            st.session_state.pop("id_verified", None)
+            st.session_state.pop("user_details", None)
+            st.rerun()
 
     # Navigation buttons
     col1, col2 = st.columns(2)
