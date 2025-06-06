@@ -269,7 +269,7 @@ if st.session_state.step == 1:
     uploaded_file = st.file_uploader("Upload your government-issued ID", type=["png", "jpg", "jpeg","jfif"])
 
     if uploaded_file:
-        st.image(Image.open(uploaded_file), caption="Uploaded ID", use_column_width=True)
+        st.image(Image.open(uploaded_file), caption="Uploaded ID", use_container_width=True)
         st.session_state.gov_id_file = uploaded_file
 
         if st.button("Extract Details via OCR"):
